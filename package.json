@@ -1,0 +1,22 @@
+{
+  "name": "bp-panda",
+  "version": "0.0.1",
+  "description": "A Vue UI Framework Based on iView",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitpower-frontend/bp-panda.git"
+  },
+  "author": "Hisheng",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bitpower-frontend/bp-panda/issues"
+  },
+  "homepage": "https://github.com/bitpower-frontend/bp-panda#readme",
+  "dependencies": {
+    "iview": "2.13.1"
+  }
+}
