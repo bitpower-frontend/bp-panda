@@ -12,3 +12,16 @@ import '../node_modules/bp-panda/styles/index.less';
 
 Vue.use(bpPanda);
 ```
+
+## 自定义组件
+在 iview 的基础上衍生的自定义组件
+
+### number-input
+
+### search-input
+
+### tag-input
+
+### x-icon
+
+### vue-echarts
