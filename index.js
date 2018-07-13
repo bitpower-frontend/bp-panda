@@ -1,1 +1,1 @@
-export * from 'iview';
+module.exports = require('iview');

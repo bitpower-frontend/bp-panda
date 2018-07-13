@@ -1,6 +1,6 @@
 {
   "name": "bp-panda",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A Vue UI Framework Based on iView",
   "main": "index.js",
   "scripts": {
@@ -18,5 +18,10 @@
   "homepage": "https://github.com/bitpower-frontend/bp-panda#readme",
   "dependencies": {
     "iview": "2.13.1"
-  }
+  },
+  "files": [
+    "styles",
+    "index.js",
+    "README.md"
+  ]
 }
