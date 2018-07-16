@@ -9,16 +9,30 @@ import SearchInput from './components/search-input/index.vue';
 
 const components = {
   iIcon,
+  XIcon: iIcon,
   xIcon,
+  BpIcon: xIcon,
   TagInput,
   VueEcharts,
   NumberInput,
   SearchInput,
 };
 
+const bpPanda = {
+  ...iView,
+  ...components,
+};
+
+// load svg resource
+// 加载自定义路径下的 svg 图标
+bpPanda.loadSvg = function (requireContext) {
+  requireContext.keys().map(requireContext);
+};
+
 // override iview install method
-const originalInstall = iView.install;
-iView.install = function (Vue, opts = {}) {
+// 注册自定义组件
+const originalInstall = bpPanda.install;
+bpPanda.install = function (Vue, opts = {}) {
   originalInstall(Vue, opts);
   // install extended components
   Object.keys(components).forEach(key => {
@@ -26,14 +40,5 @@ iView.install = function (Vue, opts = {}) {
   });
 };
 
-// 加载自定义路径下的 svg 图标
-/* function setIcons (iconPath){
-  const requireAll = requireContext => requireContext.keys().map(requireContext);
-  requireAll(require.context(iconPath, false, /\.svg$/));
-} */
-
-export default {
-  ...iView,
-  ...components,
-};
+export default bpPanda;
 

@@ -1,6 +1,6 @@
 {
   "name": "bp-panda",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A Vue UI Framework Based on iView",
   "main": "index.js",
   "scripts": {
