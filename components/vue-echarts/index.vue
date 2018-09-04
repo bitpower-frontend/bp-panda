@@ -8,6 +8,7 @@
   import echarts from 'echarts/lib/echarts';
   import 'echarts/lib/component/tooltip';
   import 'echarts/lib/component/legend';
+
   export default {
     name: 'vue-echarts',
     props: {
@@ -42,28 +43,30 @@
         type: Boolean,
         default: true,
       },
-      // 接受 resize 事件名
-      resizeEvent: {
-        type: String,
-        default: 'windowResize',
+      // 是否自动 resize
+      autoResize: {
+        type: Boolean,
+        default: true,
       },
     },
-    data (){
+    data () {
       return {
         // echarts 实例
         ins: null,
-        lock: false
+        lock: false,
+        // 防止 chrome 下会多次触发 resize 事件
+        preventTwiceResize: false,
       };
     },
-    mounted (){
-      this.eventHub.$on(this.resizeEvent, this.resize);
-      if(this.renderOnMounted){
+    mounted () {
+      if (this.renderOnMounted) {
         this.render();
       }
+      window.addEventListener('resize', this.onresize);
     },
-    beforeDestroy (){
-      this.eventHub.$off(this.resizeEvent, this.resize);
-      if(this.ins){
+    beforeDestroy () {
+      window.removeEventListener('resize', this.onresize);
+      if (this.ins) {
         // 销毁实例
         this.ins.off('legendselectchanged');
         this.ins.dispose();
@@ -71,8 +74,22 @@
       }
     },
     methods: {
-      render (options){
-        if(!this.ins){
+      // 监听 window resize 事件
+      onresize (e) {
+        if (!this.autoResize) return;
+        setTimeout(() => {
+          if (this.preventTwiceResize) return;
+          this.resize();
+          
+          console.log('>>> ==== vue-echarts resize');
+          this.preventTwiceResize = true;
+          setTimeout(() => {
+            this.preventTwiceResize = false;
+          }, 100);
+        }, 0);
+      },
+      render (options) {
+        if (!this.ins) {
           this.ins = echarts.init(document.getElementById(this.id));
         }
         this.ins.setOption(options || this.options);
@@ -82,20 +99,20 @@
           this.lock = true;
         });
       },
-      update (){
+      update () {
         this.render();
         this.resize();
       },
-      resize (){
-        if(!this.ins)return;
+      resize () {
+        if (!this.ins) return;
         const containerWidth = Math.floor(parseFloat(window.getComputedStyle(this.ins.getDom()).width));
         // 如果已经超过最大宽度，则不resize
-        if(this.maxWidth && parseInt(this.maxWidth) <= containerWidth)return;
+        if (this.maxWidth && parseInt(this.maxWidth) <= containerWidth) return;
         this.ins.resize();
       },
       // 处理点击事件
-      handleClick() {
-        if(!this.lock) {
+      handleClick () {
+        if (!this.lock) {
           this.$emit('on-click');
         }
         else {
